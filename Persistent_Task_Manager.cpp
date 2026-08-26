@@ -60,12 +60,70 @@ void ListTask(const vector<Task>& t){
 }
 
 void SearchTask(const vector<Task>& t){
-    int id, task;
+    int id, choice;
+    string task;
+    cout << "Choose search method: \n1. ID\n2. Task\n\nChoice: ";
+    cin >> choice;
+    if(choice == 1){
+        cout << "\n\nEnter the ID: ";
+        cin >> id;
+    }
+    else if(choice == 2){
+        cout << "\n\nEnter the task: ";
+        cin.ignore();
+        getline(cin, task);
+    }
+    for(const auto& each: t){
+        if(choice == 1 && each.id == id){
+            cout << each.id << '\n';
+            cout << each.description << '\n';
+            if(each.completed){
+                cout << "Status: Done\n";
+            }
+            else{
+                cout << "Status: Pending\n";
+            }
+            break;
+        }
+        else if(choice == 2 && each.description == task){
+            cout << each.id << '\n';
+            cout << each.description << '\n';
+            if(each.completed){
+                cout << "Status: Done\n";
+            }
+            else{
+                cout << "Status: Pending\n";
+            }
+            break;
+        }
+    }
 }
 
-void Save(){}
+void Save(const vector<Task>& t){
+    ofstream myfile("data.txt");
+    if(!myfile){
+        cout << "Error opening the file";
+        return;
+    }
+    for(const auto& each: t){
+        myfile << each.id << " " << each.description << " " << each.completed << '\n';
+    }
+    myfile.close();
+}
 
-void Load(){}
+void Load(vector<Task>& t){
+    ifstream myfile("data.txt");
+    if(!myfile){
+        cout << "No saved tasks yet.";
+        return;
+    }
+
+    t.clear();
+    Task task;
+    while(myfile >> task.id >> task.description >> task.completed){
+        t.push_back(task);
+    }
+}
 
 int main(){
     Task task;
@@ -104,12 +162,12 @@ int main(){
                 break;
             case 6: 
                 system("cls");
-                Save();
+                Save(tasks);
                 system("pause");
                 break;
             case 7:
                 system("cls");
-                Load();
+                Load(tasks);
                 break;
             case 8:
                 return 0;
