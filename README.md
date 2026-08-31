@@ -16,4 +16,4 @@ Choose:
 [But now there's a major difference:
 The program remembers data after you close it.]
 
-Note : This task take one word if more than one word it will break.
+Note : This task take one word if more than one word it will break.d
